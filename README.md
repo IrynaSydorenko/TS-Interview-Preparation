@@ -756,3 +756,602 @@ In this case, the resulting type <code>AB</code> must contain both <code>name</c
 
 </details>
 
+<details>
+  <summary><strong>9. How do Generics work in TypeScript and why are they useful?</strong></summary>
+
+  <p>
+    Generics in TypeScript provide a way to create reusable components (functions, classes, interfaces) that work with different types while maintaining type safety. Instead of hardcoding specific types, generics use a type variable that is specified later.
+  </p>
+
+  <p><strong>Example of a generic function:</strong></p>
+
+  ```ts
+  function identity<T>(arg: T): T {
+    return arg;
+  }
+
+  const result1 = identity<string>("Hello");
+  const result2 = identity<number>(42);
+  ```
+
+  <p>
+    Here, <code>T</code> is a placeholder type. TypeScript infers the type when the function is called, ensuring type safety.
+  </p>
+
+  <p><strong>Generic class example:</strong></p>
+
+  ```ts
+  class Box<T> {
+    content: T;
+
+    constructor(content: T) {
+      this.content = content;
+    }
+
+    getContent(): T {
+      return this.content;
+    }
+  }
+
+  const stringBox = new Box<string>("Hello");
+  const numberBox = new Box<number>(123);
+  ```
+
+  <p>
+    The class <code>Box</code> is reusable with any type you provide.
+  </p>
+
+  <p><strong>Generic interface example:</strong></p>
+
+  ```ts
+  interface Pair<T, U> {
+    first: T;
+    second: U;
+  }
+
+  const pair: Pair<string, number> = {
+    first: "Age",
+    second: 25
+  };
+  ```
+
+  <p><strong>Generics with constraints:</strong></p>
+
+  ```ts
+  function getLength<T extends { length: number }>(arg: T): number {
+    return arg.length;
+  }
+
+  getLength("Hello"); // 5
+  getLength([1, 2, 3]); // 3
+  ```
+
+  <p>
+    Constraints limit the accepted types to ones that meet specific criteria—in this case, having a <code>length</code> property.
+  </p>
+
+  <p><strong>Why use Generics?</strong></p>
+  <ul>
+    <li><strong>Code reusability:</strong> Write once, use with many types.</li>
+    <li><strong>Type safety:</strong> Catch errors at compile time.</li>
+    <li><strong>Flexibility:</strong> Build complex structures without losing type information.</li>
+  </ul>
+
+  <p>
+    In summary, generics let you write flexible, reusable, and type-safe code in TypeScript, which makes them a fundamental feature of the language.
+  </p>
+</details>
+
+<details>
+  <summary><strong>10. How can Enums be used in TypeScript and what are their advantages?</strong></summary>
+
+  <p>
+    Enums in TypeScript allow you to define a set of named constants that can be either numeric or string values. They are especially useful when you want to represent a fixed set of options.
+  </p>
+
+  <h4>Numeric Enums</h4>
+  <p>By default, enum members are assigned numeric values starting from 0, but you can also assign custom values:</p>
+
+  ```ts
+  enum Direction {
+    Up,
+    Down,
+    Left,
+    Right,
+  }
+
+  let move: Direction = Direction.Up;
+  console.log(move); // 0
+  ```
+
+  <p>You can also explicitly assign values:</p>
+
+  ```ts
+  enum Status {
+    Active = 1,
+    Inactive,
+    Pending,
+  }
+
+  console.log(Status.Active);   // 1
+  console.log(Status.Inactive); // 2
+  console.log(Status.Pending);  // 3
+  ```
+
+  <h4>String Enums</h4>
+  <p>Each member must be initialized with a string literal:</p>
+
+  ```ts
+  enum Response {
+    Yes = "YES",
+    No = "NO",
+  }
+
+  let reply: Response = Response.Yes;
+  console.log(reply); // "YES"
+  ```
+
+  <h4>Advantages of using Enums:</h4>
+  <ul>
+    <li><strong>Improved readability:</strong> Use of named values instead of magic numbers or strings makes code more understandable.</li>
+    <li><strong>Static typing:</strong> TypeScript ensures only valid enum values are used.</li>
+    <li><strong>Easier debugging:</strong> Named constants are more descriptive and easier to debug.</li>
+    <li><strong>Flexibility:</strong> Support for both numeric and string values.</li>
+    <li><strong>Bidirectional mapping (for numeric enums):</strong> You can get the name from the value and vice versa:</li>
+  </ul>
+
+  ```ts
+  enum Direction {
+    Up = 1,
+    Down,
+    Left,
+    Right,
+  }
+
+  console.log(Direction[1]); // "Up"
+  console.log(Direction.Up); // 1
+  ```
+
+  <h4>Disadvantages:</h4>
+  <ul>
+    <li><strong>Potential confusion with numeric values:</strong> Automatic incrementing can lead to mistakes if enum order changes.</li>
+    <li><strong>Larger compiled output:</strong> Enums can increase the size of the generated JavaScript compared to simple objects or constants.</li>
+  </ul>
+
+  <p>
+    <strong>Conclusion:</strong> Enums in TypeScript are a powerful way to define fixed sets of values with clear type safety, improved structure, and better code clarity.
+  </p>
+</details>
+
+<details>
+  <summary><strong>11. What refactoring and code maintenance capabilities does TypeScript provide?</strong></summary>
+
+  <p>
+    TypeScript offers a wide range of tools that greatly improve code refactoring and maintainability. Its static typing system, advanced type features, and integration with modern IDEs make code more reliable, understandable, and easier to evolve. Here are the key capabilities:
+  </p>
+
+  <h4>1. Static Typing</h4>
+  <p>
+    TypeScript detects errors at compile-time rather than runtime. This prevents many common bugs, such as calling non-existent properties or passing the wrong argument types.
+  </p>
+
+  ```ts
+  function sum(a: number, b: number): number {
+    return a + b;
+  }
+
+  sum(10, "20"); // Error: Argument of type '"20"' is not assignable to parameter of type 'number'
+  ```
+
+  <h4>2. Interfaces and Type Aliases</h4>
+  <p>
+    Interfaces and types help structure and centralize definitions, making large codebases easier to manage and refactor.
+  </p>
+
+  ```ts
+  interface User {
+    name: string;
+    age: number;
+  }
+
+  const user: User = { name: "John", age: 30 };
+  ```
+
+  <h4>3. IDE Autocompletion and Tooling</h4>
+  <p>
+    With TypeScript, editors like VS Code offer powerful autocompletion, navigation, and inline documentation based on types.
+  </p>
+
+  ```ts
+  user.name; // IDE shows available properties and types
+  ```
+
+  <h4>4. Generics</h4>
+  <p>
+    Generics enable the creation of reusable, type-safe functions and data structures.
+  </p>
+
+  ```ts
+  function identity<T>(arg: T): T {
+    return arg;
+  }
+
+  identity<number>(42); // Works with multiple types while preserving type safety
+  ```
+
+  <h4>5. Modules and Namespacing</h4>
+  <p>
+    TypeScript supports modular architecture, allowing logical separation of code into files and modules.
+  </p>
+
+  ```ts
+  // math.ts
+  export function add(a: number, b: number): number {
+    return a + b;
+  }
+
+  // main.ts
+  import { add } from './math';
+  console.log(add(2, 3)); // 5
+  ```
+
+  <h4>6. Built-in Refactoring Tools in IDEs</h4>
+  <p>
+    Features like "Rename Symbol" or "Find All References" work more reliably with TypeScript because of its typed AST (Abstract Syntax Tree).
+  </p>
+
+  <ul>
+    <li>Safely rename variables and functions across files.</li>
+    <li>Track usage of types and interfaces across your codebase.</li>
+  </ul>
+
+  <h4>7. Extendable Types</h4>
+  <p>
+    Interfaces and types can be extended without rewriting existing structures.
+  </p>
+
+  ```ts
+  interface Person {
+    name: string;
+  }
+
+  interface Employee extends Person {
+    salary: number;
+  }
+
+  const employee: Employee = { name: "John", salary: 1000 };
+  ```
+
+  <h4>8. Type-Safe Complex Structures</h4>
+  <p>
+    TypeScript validates deeply nested data and ensures their correct usage.
+  </p>
+
+  ```ts
+  type User = {
+    name: string;
+    address: {
+      city: string;
+      zip: string;
+    };
+  };
+
+  const user: User = {
+    name: "Alice",
+    address: {
+      city: "New York",
+      zip: "10001",
+    },
+  };
+  ```
+
+  <h4>9. Union and Intersection Types</h4>
+  <p>
+    These types allow better expression of possible object shapes or function return values.
+  </p>
+
+  ```ts
+  type Success = { status: "success"; data: string };
+  type Error = { status: "error"; message: string };
+  type Response = Success | Error;
+
+  function handleResponse(response: Response) {
+    if (response.status === "success") {
+      console.log(response.data);
+    } else {
+      console.log(response.message);
+    }
+  }
+  ```
+
+  <h4>10. Gradual Adoption and Compatibility</h4>
+  <p>
+    TypeScript is a superset of JavaScript, meaning you can adopt it gradually without rewriting existing code.
+  </p>
+
+  <p>
+    <strong>Conclusion:</strong> TypeScript empowers developers with strong typing, reusable abstractions, and IDE-friendly features. These advantages result in cleaner, more maintainable code and easier refactoring in both small and large-scale applications.
+  </p>
+</details>
+
+<details>
+  <summary><strong>12. What are decorators in TypeScript and when are they used?</strong></summary>
+
+  <p>
+    Decorators are special functions in TypeScript that allow you to modify the behavior of classes, methods, properties, or parameters. They provide a declarative way to add cross-cutting concerns (like logging, validation, or dependency injection) without changing the core logic of your code.
+  </p>
+
+  <h4>🔧 How to enable decorators</h4>
+  <p>
+    Since decorators are still a stage 3 proposal in JavaScript, you need to enable them in TypeScript by setting <code>"experimentalDecorators": true</code> in your <code>tsconfig.json</code> file.
+  </p>
+
+  <h4>📌 Types of decorators</h4>
+  <ul>
+    <li><strong>Class decorators</strong> — modify or annotate a class</li>
+    <li><strong>Method decorators</strong> — wrap or enhance a method</li>
+    <li><strong>Property decorators</strong> — affect property descriptors</li>
+    <li><strong>Parameter decorators</strong> — attach metadata to method parameters</li>
+  </ul>
+
+  <h4>1. Class Decorator</h4>
+  <p>Example of sealing a class:</p>
+  
+  ```ts
+  function Sealed(constructor: Function) {
+    Object.seal(constructor);
+    Object.seal(constructor.prototype);
+  }
+
+  @Sealed
+  class Person {
+    name: string;
+    constructor(name: string) {
+      this.name = name;
+    }
+  }
+  ```
+
+  <h4>2. Method Decorator</h4>
+  <p>Logging method calls:</p>
+
+  ```ts
+  function Log(target: Object, propertyKey: string, descriptor: PropertyDescriptor) {
+    const originalMethod = descriptor.value;
+    descriptor.value = function (...args: any[]) {
+      console.log(`Method ${propertyKey} called with args:`, args);
+      return originalMethod.apply(this, args);
+    };
+  }
+
+  class Calculator {
+    @Log
+    add(a: number, b: number): number {
+      return a + b;
+    }
+  }
+  ```
+
+  <h4>3. Property Decorator</h4>
+  <p>Making a property read-only:</p>
+
+  ```ts
+  function Readonly(target: Object, propertyKey: string) {
+    Object.defineProperty(target, propertyKey, {
+      writable: false,
+    });
+  }
+
+  class Car {
+    @Readonly
+    model: string = "Tesla";
+  }
+  ```
+
+  <h4>4. Parameter Decorator</h4>
+  <p>Decorating a parameter of a method:</p>
+
+  ```ts
+  function LogParam(target: Object, propertyKey: string, parameterIndex: number) {
+    console.log(`Parameter ${parameterIndex} of method ${propertyKey} has been decorated.`);
+  }
+
+  class Engine {
+    start(@LogParam speed: number) {
+      console.log(`Engine started at speed: ${speed}`);
+    }
+  }
+  ```
+
+  <h4>✅ Benefits of decorators</h4>
+  <ul>
+    <li>Clean separation of concerns</li>
+    <li>Reusable logic (e.g., logging, caching)</li>
+    <li>Integration with frameworks like Angular</li>
+    <li>Improve modularity and testability</li>
+  </ul>
+
+  <h4>📌 When to use decorators?</h4>
+  <ul>
+    <li>To implement cross-cutting concerns like logging, validation, or authorization</li>
+    <li>To enhance classes/methods without modifying core business logic</li>
+    <li>In frameworks like Angular for dependency injection and metadata</li>
+  </ul>
+
+  <p><strong>Conclusion:</strong> Decorators in TypeScript offer a powerful, expressive way to modify behavior at runtime in a declarative fashion. They're especially useful in enterprise-grade applications or when working with decorator-driven frameworks.</p>
+</details>
+
+<details>
+  <summary><strong>13. How are namespaces and modules used in TypeScript?</strong></summary>
+
+  <p>
+    TypeScript offers two main ways to organize code: <strong>namespaces</strong> and <strong>modules</strong>. Both help structure code but are used in different scenarios and have distinct features.
+  </p>
+
+  <h4>1. Namespaces</h4>
+  <p>
+    Namespaces group logically related code within one or multiple files. They help avoid naming conflicts and organize large codebases.
+  </p>
+  <p>
+    Declared with the <code>namespace</code> keyword, and elements inside can be made accessible outside by using <code>export</code>.
+  </p>
+
+  <pre><code lang="ts">
+// Example of namespace
+namespace Shapes {
+  export class Circle {
+    constructor(public radius: number) {}
+    getArea(): number {
+      return Math.PI * this.radius * this.radius;
+    }
+  }
+
+  export class Square {
+    constructor(public side: number) {}
+    getArea(): number {
+      return this.side * this.side;
+    }
+  }
+}
+
+const circle = new Shapes.Circle(5);
+console.log(circle.getArea()); // Outputs the circle area
+
+const square = new Shapes.Square(10);
+console.log(square.getArea()); // Outputs the square area
+  </code></pre>
+
+  <p><strong>Key points about namespaces:</strong></p>
+  <ul>
+    <li>Good for organizing code within one or a few related files.</li>
+    <li>Accessing elements requires specifying the namespace name, which can lead to longer access paths.</li>
+    <li>More popular before ES6 modules became standard; now less commonly used.</li>
+  </ul>
+
+  <h4>2. Modules</h4>
+  <p>
+    Modules are the modern, standard way to organize code in TypeScript and JavaScript, based on the ES6 (ES2015) module system.
+  </p>
+  <p>
+    Each file that contains <code>import</code> or <code>export</code> statements is considered a module.
+  </p>
+
+  <pre><code lang="ts">
+// shapes.ts (module exporting classes)
+export class Circle {
+  constructor(public radius: number) {}
+  getArea(): number {
+    return Math.PI * this.radius * this.radius;
+  }
+}
+
+export class Square {
+  constructor(public side: number) {}
+  getArea(): number {
+    return this.side * this.side;
+  }
+}
+
+// main.ts (module importing classes)
+import { Circle, Square } from './shapes';
+
+const circle = new Circle(5);
+console.log(circle.getArea()); // Outputs the circle area
+
+const square = new Square(10);
+console.log(square.getArea()); // Outputs the square area
+  </code></pre>
+
+  <p><strong>Key points about modules:</strong></p>
+  <ul>
+    <li>Each file is a separate module.</li>
+    <li>Clear control over what code is public (exported) and private.</li>
+    <li>Imported elements can be renamed to avoid naming conflicts.</li>
+    <li>Supported natively in modern browsers and Node.js.</li>
+  </ul>
+
+  <h4>Comparison: Namespaces vs Modules</h4>
+  <table>
+    <thead>
+      <tr><th>Namespaces</th><th>Modules</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Group related code inside one or multiple files.</td>
+        <td>Split code into separate files with explicit imports and exports.</td>
+      </tr>
+      <tr>
+        <td>Syntax groups elements inside a single file.</td>
+        <td>Each file is its own module.</td>
+      </tr>
+      <tr>
+        <td>Require specifying namespace name to access elements.</td>
+        <td>Use import/export syntax to access elements.</td>
+      </tr>
+      <tr>
+        <td>Less popular after ES6 module standardization.</td>
+        <td>The modern, widely adopted approach.</td>
+      </tr>
+      <tr>
+        <td>Not supported outside TypeScript without compilation.</td>
+        <td>Supported by all ES6-compliant environments.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h4>When to use which?</h4>
+  <ul>
+    <li>Namespaces are suitable for small projects or organizing code within one file, but are becoming less common.</li>
+    <li>Modules are recommended for most cases, especially large projects, because they enable code splitting and better dependency management.</li>
+  </ul>
+
+  <p><strong>Conclusion:</strong> Modules are the standard and recommended way to organize modern TypeScript and JavaScript projects, supported by the ES6 standard. Namespaces may still be useful in some specific scenarios but are generally less favored today.</p>
+</details>
+
+<details>
+  <summary>14. What migration strategies from JavaScript to TypeScript do you know?</summary>
+  <p>
+    Migrating from JavaScript to TypeScript improves code quality, adds static typing, and eases maintenance. Here are common migration strategies:
+  </p>
+  <h4>1. Incremental Migration</h4>
+  <ul>
+    <li>Add TypeScript to the existing project by installing it and creating a <code>tsconfig.json</code>.</li>
+    <li>Rename some <code>.js</code> files to <code>.ts</code> or <code>.tsx</code> gradually.</li>
+    <li>Add type annotations progressively, starting with new or critical code.</li>
+    <li>Use <code>// @ts-check</code> comments in JavaScript files for basic type checking.</li>
+  </ul>
+  <p><b>Pros:</b> No need to rewrite everything at once. Can focus on important parts first.</p>
+  <p><b>Cons:</b> Mixed codebase can be harder to maintain. Migration can take a long time.</p>
+
+  <h4>2. Strict Mode with Lax Settings</h4>
+  <ul>
+    <li>Enable <code>"strict": true</code> in <code>tsconfig.json</code>.</li>
+    <li>Initially disable some strict rules like <code>noImplicitAny</code> or <code>strictNullChecks</code> for easier migration.</li>
+    <li>Gradually tighten rules over time as more code is converted.</li>
+  </ul>
+  <p><b>Pros:</b> Flexible control over strictness. Gradual improvement of type safety.</p>
+  <p><b>Cons:</b> Requires careful config tuning and time.</p>
+
+  <h4>3. Refactor with New Files</h4>
+  <ul>
+    <li>Write all new features exclusively in TypeScript.</li>
+    <li>Rewrite old code files in TypeScript only when necessary or during refactoring.</li>
+  </ul>
+  <p><b>Pros:</b> Keeps new development moving fast without immediate rewrites.</p>
+  <p><b>Cons:</b> Codebase remains mixed for longer, consistency may suffer.</p>
+
+  <h4>4. Full Migration</h4>
+  <ul>
+    <li>Rename all <code>.js</code> files to <code>.ts</code>.</li>
+    <li>Rewrite entire project adding proper typings.</li>
+    <li>Use automated migration tools if available.</li>
+  </ul>
+  <p><b>Pros:</b> Complete and consistent TypeScript adoption with full type safety.</p>
+  <p><b>Cons:</b> Time-consuming, risky for large projects, requires significant effort.</p>
+
+  <h4>Summary</h4>
+  <p>
+    The choice depends on project size, resources, and deadlines. Incremental migration is the most popular for existing projects, while full migration suits new or small projects. Using strict mode with gradual tightening ensures better code quality over time.
+  </p>
+</details>
+
