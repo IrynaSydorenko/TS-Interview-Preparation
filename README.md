@@ -1309,7 +1309,7 @@ console.log(square.getArea()); // Outputs the square area
 </details>
 
 <details>
-  <summary>14. What migration strategies from JavaScript to TypeScript do you know?</summary>
+  <summary><strong>14. What migration strategies from JavaScript to TypeScript do you know?</strong></summary>
   <p>
     Migrating from JavaScript to TypeScript improves code quality, adds static typing, and eases maintenance. Here are common migration strategies:
   </p>
